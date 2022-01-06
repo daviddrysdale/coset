@@ -403,10 +403,12 @@ impl ProtectedHeader {
             Value::Bytes(b) => b,
             v => return cbor_type_error(&v, "bstr encoded map"),
         };
-        if data.is_empty() {
-            return Ok(Self::default());
-        }
-        let header = Header::from_slice(&data)?;
+        let header = if data.is_empty() {
+            // An empty bstr is used as a short cut for an empty header map.
+            Header::default()
+        } else {
+            Header::from_slice(&data)?
+        };
         Ok(ProtectedHeader {
             original_data: Some(data),
             header,

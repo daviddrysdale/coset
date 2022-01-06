@@ -71,6 +71,9 @@ fn test_cose_recipient_decode() {
 
         let mut got = CoseRecipient::from_slice(&got).unwrap();
         got.protected.original_data = None;
+        for mut recip in &mut got.recipients {
+            recip.protected.original_data = None;
+        }
         assert_eq!(*recipient, got);
     }
 }
