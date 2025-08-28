@@ -106,7 +106,7 @@ fn test_cwt_encode() {
     ];
     for (i, (claims, claims_data)) in tests.iter().enumerate() {
         let got = claims.clone().to_vec().unwrap();
-        assert_eq!(*claims_data, hex::encode(&got), "case {}", i);
+        assert_eq!(*claims_data, hex::encode(&got), "case {i}");
 
         let got = ClaimsSet::from_slice(&got).unwrap();
         assert_eq!(*claims, got);
